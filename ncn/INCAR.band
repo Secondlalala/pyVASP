@@ -18,7 +18,7 @@ NELMIN  = 5
 GGA     = PE
 
 ! PAW's
-LREAL   = auto
+LREAL   = .FALSE.
 NCORE   = 4
 
 ! parallelisation
@@ -31,5 +31,3 @@ LCHARG  = .TRUE.
 ! Band Structure Calculation
 RWIG    = 0.863 0.741 0.370 1.725 1.111
 LORBIT  = 11
-ISPIN   = 1
-ICHARG  = 0
