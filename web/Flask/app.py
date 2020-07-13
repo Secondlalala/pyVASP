@@ -613,11 +613,15 @@ def check():
 
             with conn:
                 cur = conn.cursor()
-                sql = "SELECT `fullname` FROM `Users` WHERE `username` = %s"
+                sql = "SELECT * FROM `Users` WHERE `username` = %s"
                 cur.execute(sql, (user))
                 fullname = cur.fetchone()
-                fullname = fullname[0]
+                fullname = fullname[4]
+                credit = fullname[5]
                 cur.close()
+            if credit <= 0:
+                text = "Credit ไม่เพียงพอสำหรับทำการจองเครื่องมือ"
+                return render_template('booking_error.html', message=text, user=user, year=now_year, month=now_month)
 
             with conn:
                 cur = conn.cursor()
