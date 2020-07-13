@@ -1,0 +1,54 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 align='center'>Welcome : {{ user }}</h1>
+<h4 align='center'>ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี</h4>
+<h4 align='center'>วิทยาลัยนาโนเทคโนโลยีพระจอมเกล้าลาดกระบัง</h4>
+<br>
+<div class="container" align='center'>
+    <a href="/user/{{ year }}-{{ month }}" class="btn btn-info">Month</a>
+    <a href="/today/{{ year }}-{{ month }}-{{ date }}" class="btn btn-info">Today</a>
+    <a href="{{ url_for('pending') }}" class="btn btn-info">Pending</a>
+    <a href="{{ url_for('creatuser') }}" class="btn btn-success">Create user</a>
+    <a href="{{ url_for('topup') }}" class="btn btn-info">Topup</a>
+    <a href="{{ url_for('export') }}" class="btn btn-info">Export</a>
+</div>
+<br>
+
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading"><h4 align='center'></h4>ผู้ใช้งานใหม่</h4></div>
+        <div class="panel-body">
+            <form action="{{ url_for('create_user') }}" method="post">
+                <div class="form-group">
+                    <label for="fname">Username</label>
+                    <input type="text" class="form-control"  name="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <label for="fname">ชื่อ-นามสกุล</label>
+                    <input type="text" class="form-control"  name="fullname" placeholder="ชื่อ-นามสกุล" required>
+                </div>
+                <div class="form-group">
+                    <label for="fname">Email</label>
+                    <input type="email" class="form-control"  name="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="fname">หมายเลขโทรศัพท์</label>
+                    <input type="text" class="form-control"  name="phone" placeholder="080-0000000" required>
+                </div>
+                <div class="form-group">
+                    <label for="fname">จำนวนเครดิตเริ่มต้น</label>
+                    <input type="text" class="form-control"  name="credit" placeholder="1000" required>
+                </div>
+                <br>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" value="Submit">บันทึก</button>
+                    <button type="reset" class="btn btn-danger" value="Reset">Clear</button>
+                    
+                    <a href="/" class="pull-right btn btn-primary">กลับหน้าแรก</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

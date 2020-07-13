@@ -1,252 +1,40 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 align='center'>ศูนย์เครื่องมือ SEM</h1>
-{% if user %}
-<h3>Welcome : {{ user }}</h3>
-{% endif %}
+<h3 align='center'>ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี</h3>
+<h3 align='center'>วิทยาลัยนาโนเทคโนโลยีพระจอมเกล้าลาดกระบัง</h3>
+<br>
 <div class="container">
-    <br>
-    <table border="0" cellpadding="0" cellspacing="0" class="month" style="center" align="center">
-        <tr style="background-color:gainsboro">
-            <th colspan="7" style="text-align:center" >
-                <div class="row">
-                    <div class="column" class="pull-left">
-                        {% set monx = mon-1 %}
-                        <a href="/show/{{ year }}-{{ monx }}" "><< Previous {{ monx }}</a>
-                    </div>
-                    <div class="column">{{ month }} {{ year }}</div>
-                    <div class="column" class="pull-right">
-                        {% set monx = mon+1 %}
-                        <a href="/show/{{ year }}-{{ monx }}" ">{{ monx }} Next >></a>
-                    </div>
-                </div>
-            </th>
-        </tr>
-        <tr style="background-color:gainsboro">
-            <th style="text-align:center">Sunday</th>
-            <th style="text-align:center">Monday</th>
-            <th style="text-align:center">Tuesday</th>
-            <th style="text-align:center">Wednesday</th>
-            <th style="text-align:center">Thursday</th>
-            <th style="text-align:center">Friday</th>
-            <th style="text-align:center">Saturday</th>
-        </tr>
-        {% for row in range(total) %}
-        {% set i = row*7 %}
-        <tr>
-            <!-- SUNDAY -->
-            {% if status[i][0] == 0 %}
-                <td>{% set i = i+1 %}</td>
-            {% elif status[i][1] == 'Full' %}
-                <td style="background-color:#FF0000">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'weekend' %}
-                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'Morning' or status[i][1] == 'Afternoon' %}
-                <td style="background-color:khaki">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% else %}
-                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% endif %}
-
-            <!-- MONDAY -->
-            {% if status[i][0] == 0 %}
-                <td>{% set i = i+1 %}</td>
-            {% elif status[i][1] == 'Full' %}
-                <td style="background-color:#FF0000">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'weekend' %}
-                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'Morning' or status[i][1] == 'Afternoon' %}
-                <td style="background-color:khaki">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% else %}
-                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% endif %}
-
-            <!-- TUESDAY -->
-            {% if status[i][0] == 0 %}
-                <td>{% set i = i+1 %}</td>
-            {% elif status[i][1] == 'Full' %}
-                <td style="background-color:#FF0000">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'weekend' %}
-                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'Morning' or status[i][1] == 'Afternoon' %}
-                <td style="background-color:khaki">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% else %}
-                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% endif %}
-
-            <!-- WEDNESDAY -->
-            {% if status[i][0] == 0 %}
-                <td>{% set i = i+1 %}</td>
-            {% elif status[i][1] == 'Full' %}
-                <td style="background-color:#FF0000">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'weekend' %}
-                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'Morning' or status[i][1] == 'Afternoon' %}
-                <td style="background-color:khaki">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% else %}
-                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% endif %}
-
-            <!-- THERSDAY -->
-            {% if status[i][0] == 0 %}
-                <td>{% set i = i+1 %}</td>
-            {% elif status[i][1] == 'Full' %}
-                <td style="background-color:#FF0000">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'weekend' %}
-                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'Morning' or status[i][1] == 'Afternoon' %}
-                <td style="background-color:khaki">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% else %}
-                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% endif %}
-
-            <!-- FRIDAY -->
-            {% if status[i][0] == 0 %}
-                <td>{% set i = i+1 %}</td>
-            {% elif status[i][1] == 'Full' %}
-                <td style="background-color:#FF0000">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'weekend' %}
-                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'Morning' or status[i][1] == 'Afternoon' %}
-                <td style="background-color:khaki">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% else %}
-                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% endif %}
-
-            <!-- SATURDAY -->
-            {% if status[i][0] == 0 %}
-                <td>{% set i = i+1 %}</td>
-            {% elif status[i][1] == 'Full' %}
-                <td style="background-color:#FF0000">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'weekend' %}
-                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'Morning' or status[i][1] == 'Afternoon' %}
-                <td style="background-color:khaki">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% else %}
-                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% endif %}
-        </tr>
-        {% endfor %}
-        </table>
-    <br>
-    <table class="table table-bordered" align="center">
-        <thead>
-            <tr>
-                <th>เลขที่การจอง</th>
-                <th>ชื่อ-นามสกุล</th>
-                <th>หน่วยงาน</th>
-                {% if user=='admin' %}
-                    <th>โทรศัพท์</th>
-                    <th>e-mail</th>
-                {% endif %}
-                <th>วันที่ทำการจอง</th>
-                <th>วันที่ใช้เครื่องมือ</th>
-                <th>เช้า</th>
-                <th>บ่าย</th>
-                {% if user=='admin' %}
-                    <th>Action</th>
-                {% endif %}
-            </tr>
-        </thead>
-        <tbody>
-            {% for row in data %}
-            <tr>
-                <td>{{ row.0 }}</td>
-                <td>{{ row.2 }}</td>
-                <td>{{ row.3 }}</td>
-                {% if user=='admin' %}
-                    <td>{{ row.4 }}</td>
-                    <td>{{ row.5 }}</td>
-                {% endif %}
-                <td>{{ row.6 }}</td>
-                <td>{{ row.7 }}</td>
-                <td>{{ row.8 }}</td>
-                <td>{{ row.9 }}</td>
-                {% if user=='admin' %}
-                    <td>
-                        <a href="" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.0}}">Edit</a>
-                        <a href="/delete/{{ row.0 }}" class="btn btn-danger btn-xs" onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่?')">Delete</a>
-                    </td>
-                {% endif %}
-            </tr>
-            <div id="modaledit{{row.0}}" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">แก้ไขการจอง</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form action="/update" method="POST">
-                                <input type="hidden" name="id" value="{{row.0}}">
-                                <div class="form-group">
-                                    <label>ชื่อ-นามสกุล :</label>
-                                    <input type="text" class="form-control" name="name" value="{{row.1}}">
-                                </div>
-                                <div class="form-group">
-                                    <label>หน่วยงาน :</label>
-                                    <input type="text" class="form-control" name="department" value="{{row.2}}">
-                                </div>
-                                <div class="form-group">
-                                    <label>โทรศัพท์ :</label>
-                                    <input type="text" class="form-control" name="phone" value="{{row.3}}">
-                                </div>
-                                <div class="form-group">
-                                    <label>E-mail :</label>
-                                    <input type="text" class="form-control" name="email" value="{{row.4}}">
-                                </div>
-                                    <input type="hidden" name="ิbook_date" value="{{row.5}}">
-                                <div class='input-group date' id='datetimepicker1' >
-                                    <label for="fname">วันที่ใช้เครื่องมือ</label>
-                                    <input type="text" class="form-control" name="instru_date" value="{{row.6}}">
-                                    <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar">
-                                    </span>
-                                </div>
-                                <div class="form-group">
-                                    <label>09:00 - 12:00 (3 Hrs) :</label>
-                                    {% if row.7 == 1 %}
-                                        <input type="checkbox" class="form-control" name="time" value="time_1" checked>
-                                    {% else %}
-                                        <input type="checkbox" class="form-control" name="time" value="time_1" >
-                                    {% endif %}
-                                </div>
-                                <div class="form-group">
-                                    <label>13:00 - 16:00 (3 Hrs) :</label>
-                                    {% if row.8 == 1 %}
-                                        <input type="checkbox" class="form-control" name="time" value="time_2" checked>
-                                    {% else %}
-                                        <input type="checkbox" class="form-control" name="time" value="time_2" >
-                                    {% endif %}
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-primary" type="submit">อัพเดท</button>
-                                    <button type="button" class="pull-right btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
-            {% endfor %}
-        </tbody>
-    </table>
-    {% if user %}
-        <a href="{{ url_for('add_form') }}" class="btn btn-success">จองใช้เครื่องมือ</a>
-    {% endif %}
-    <span class="pull-right">Updated : <span id="datetime"></span></span>
-    <script>
-        var dt = new Date();
-        document.getElementById("datetime").innerHTML = dt.toLocaleString();
-    </script>
-    <script>
-        $(function () {
-            $('#datetimepicker1').datetimepicker({
-                daysOfWeekDisabled: [0, 6],
-                format: 'L',
-                format: 'DD-MM-YYYY'
-            });
-        });
-    </script>
+    <div class="panel panel-primary">
+        <div class="panel-heading">เครื่องมือที่ให้บริการ</div>
+        <div class="panel-body">
+            <a href="/xrd/{{ year }}-{{ month }}" class="btn btn-secondary btn-success">XRD</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>AFM</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>AFM (HR)</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>Micro Hardness</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>Stereo Microscope</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>Upright Microscope</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>Particle Analyzer</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>Potentiostat</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>Raman</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>Single Beam UV–Vis</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>Double Beam UV–Vis</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>Centrifuge</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>Furnace</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>Furnace Tube</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>Rotary Evaporator</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>FT-IR</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>HPLC</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>Solar Simulator</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>Ball–Milling</a>
+            <a href="/" class="btn btn-secondary btn-danger" disabled>Fluorescence Spectro</a>
+        </div>
+    </div>
+    <div class="panel panel-primary">
+        <div class="panel-heading">เครื่องมือที่ให้บริการร่วม</div>
+            <div class="panel-body">
+                <a href="/fesem/{{ year }}-{{ month }}" class="btn btn-secondary btn-info">FESEM</a>
+        </div>
+    </div>
 </div>
 {% endblock %}

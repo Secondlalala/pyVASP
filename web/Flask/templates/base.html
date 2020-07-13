@@ -3,7 +3,7 @@
 <html lang="en" dir="ltr">
     <head>
         <meta charset="utf-8">
-        <title>ศูนย์เครื่องมือ SEM</title>
+        <title>ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี, วิทยาลัยนาโนฯ</title>
         <meta name="viewport" content="width=device-width, initial-scale=1.0">
         <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
         <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
@@ -37,18 +37,26 @@
                 display: table;
                 clear: both;
             }
+            .container {
+                width: 98%;
+            }
         </style>
     </head>
     <body>
         <br>
+        <h3 align='center'><span style="color:red">Close Beta Test - สำหรับนักวิทยาศาตร์ทดลองระบบเท่านั้น</span></h3>
+        <h3 align='center'><span style="color:red">กำหนดการทดสอบถึงวันที่ 13 กรกฎาคม 2563</span></h3>
+        <h3 align='center'><span style="color:red">หากมีข้อเสนอแนะเพิ่มเติม กรุณาส่งมาที่ kittiphong.am@kmitl.ac.th</span></h3>
+        <h3 align='center'><span style="color:red">การจองทั้งหมด จะไม่ถูกนำไปใช้งานจริง และจะทำการลบทั้งหมดในวันที่ 31 กรกฎาคม 2563</span></h3>
+        <br>
         <div class="container">
-            <label>ศูนย์เครื่องมือ SEM  </label>
+            <label>ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี, วิทยาลัยนาโนฯ</label>
             <a href="{{ url_for('home') }}" class="btn btn-primary">กลับหน้าแรก</a>
             {% if user %}
             <a href="{{ url_for('add_form') }}" class="btn btn-success">จองใช้เครื่องมือ</a>
             <a href="{{ url_for('logout') }}" class="pull-right btn btn-warning">Logout</a>
             <div class="pull-right">&nbsp;</div>
-            <a href="{{ url_for('user') }}" class="pull-right btn btn-info">User</a>
+            <a href="/user/{{ year }}-{{ month }}" class="pull-right btn btn-info">{{ user }}</a>
             {% else %}
             <a href="{{ url_for('login') }}" class="pull-right btn btn-warning">Login</a>
             {% endif %}
@@ -60,6 +68,7 @@
             <div class="footer-copyright text-center py-3">© 2020 Copyright:
                 <a href="http://www.nano.kmitl.ac.th/"> College of Nanotechnogy, KMITL</a>
             </div>  
+            <br>
         </footer>
     </body>
 </html>

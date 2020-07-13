@@ -1,0 +1,74 @@
+{% extends "fesem_base.html" %}
+
+{% block content %}
+<h1 align='center'>Welcome : {{ user }}</h1>
+<h4 align='center'>FESEM-EDX</h4>
+<br>
+<div class="container">
+    <div class="panel panel-success">
+        <div class="panel-heading">Confirm</div>
+        <div class="panel-body">
+            <h3 align="center">ยืนยันการใช้เครื่องมือ</h3>
+            <br>
+            <form action="{{ url_for('fesem_insert') }}" method="post">
+                {% if id != -1 %}
+                    <input type="hidden" class="form-control"  name="id" value="{{ id }}">
+                    <label>เลขที่การจอง : </label> {{ id }} <br>
+                {% else %}
+                    <input type="hidden" class="form-control"  name="id" value="{{ id }}">
+                {% endif %}
+                <input type="hidden" class="form-control"  name="instrument" value="{{ instrument }}">
+                <label>เครื่องมือ : </label> {{ instrument }} <br>
+                <input type="hidden" class="form-control"  name="user" value="{{ user }}">
+                <label>ผู้ทำการจอง : </label> {{ fullname }} <br>
+                <input type="hidden" class="form-control"  name="material" value="{{ material }}">
+                <label>สารที่ทดสอบ : </label> {{ material }} <br>
+                <input type="hidden" class="form-control"  name="size" value="{{ size }}">
+                <label>ขนาดของชิ้นงาน : </label> {{ size }} <br>
+                <input type="hidden" class="form-control"  name="examine" value="{{ examine }}">
+                <label>สิ่งที่ต้องการทดสอบ : </label> {{ examine }} <br>
+                <input type="hidden" class="form-control"  name="number" value="{{ number }}">
+                <label>จำนวนชิ้นงาน : </label> {{ number }} <br>
+                {% if coating %}
+                    <input type="hidden" class="form-control"  name="coating" value="1">
+                {% else %}
+                    <input type="hidden" class="form-control"  name="coating" value="0">
+                {% endif %}
+                <label>Au coating : </label> {{ coating }} <br>
+                <input type="hidden" class="form-control"  name="comment" value="{{ comment }}">
+                <label>บันทึกถึงนักวิทยาศาสตร์ : </label> {{ comment }} <br>
+                <input type='hidden' class="form-control"  name="instru_date" value="{{ instru_date }}">
+                <label>วันที่ใช้เครื่องมือ : </label> {{ instru_date }} <br>
+                {% if time.0 == 1 %}
+                    <input type="hidden" class="form-control"  name="time_09" value="1">
+                    <label>09:00 - 12:00 (3 Hr) </label><br>
+                {% else %}
+                    <input type="hidden" class="form-control"  name="time_09" value="0">
+                {% endif %}
+                {% if time.1 == 1 %}
+                    <input type="hidden" class="form-control"  name="time_13" value="1">
+                    <label>13:00 - 16:00 (3 Hr) </label><br>
+                {% else %}
+                    <input type="hidden" class="form-control"  name="time_13" value="0">
+                {% endif %}
+                <br>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" value="Submit">ยืนยัน</button>
+                    <button type="/add" class="btn btn-danger" >ยกเลิก</button>
+                    
+                    <a href="/" class="pull-right btn btn-primary">กลับหน้าแรก</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+<script>
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            daysOfWeekDisabled: [0, 6],
+            format: 'L',
+            format: 'YYYY-DD-MM'
+        });
+    });
+</script>
+{% endblock %}

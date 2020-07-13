@@ -1,45 +1,81 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 align='center'>จองใช้เครื่องมือ</h1>
+<h1 align='center'>Welcome : {{ user }} / Credit : {{ credit }}</h1>
+<h4 align='center'>ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี</h4>
+<h4 align='center'>วิทยาลัยนาโนเทคโนโลยีพระจอมเกล้าลาดกระบัง</h4>
 <br>
-{% if user %}
-<h3>Welcome : {{ user }}</h3>
-{% endif %}
 <div class="container">
     <div class="panel panel-primary">
-        <div class="panel-heading">กรุณากรอกข้อมูล</div>
+        <div class="panel-heading">ระบบจองใช้เครื่องมือ</div>
         <div class="panel-body">
             <form action="{{ url_for('check') }}" method="post">
+                <input type="hidden" class="form-control"  name="edit" value="0">
                 <div class="form-group">
-                    <label for="fname">ชื่อ-นามสกุล</label>
-                    <input type="text" class="form-control"  name="name">
+                    <label for="fname">เครื่องมือ</label><br>
+                    <input type="radio" id="XRD" name="instrument" value="XRD-1" >
+                    <label for="XRD">&nbsp;&nbsp;{{ instru[0][0] }}</label><br>
+                    <input type="radio" id="XRD" name="instrument" value="XRD-2" >
+                    <label for="XRD">&nbsp;&nbsp;{{ instru[1][0] }}</label><br>
+                    <input type="radio" id="XRD" name="instrument" value="XRD-3" >
+                    <label for="XRD">&nbsp;&nbsp;{{ instru[2][0] }}</label><br>
+                    <input type="radio" id="XRD" name="instrument" value="XRD-4" >
+                    <label for="XRD">&nbsp;&nbsp;{{ instru[3][0] }}</label><br>
                 </div>
                 <div class="form-group">
-                    <label for="fname">หน่วยงาน</label>
-                    <input type="text" class="form-control"  name="department">
+                    <label for="fname">ผู้ใช้งานเครื่องมือ</label>
+                    <input type="text" class="form-control"  name="name" placeholder="ผู้ใช้งานเครื่องมือ" required>
                 </div>
                 <div class="form-group">
-                    <label for="fname">เบอร์โทรศัพท์</label>
-                    <input type="text" class="form-control"  name="phone">
+                    <label for="fname">หมายเลขโทรศัพท์</label>
+                    <input type="text" class="form-control"  name="phone" placeholder="หมายเลขโทรศัพท์" required>
                 </div>
                 <div class="form-group">
-                    <label for="fname">e-mail</label>
-                    <input type="email" class="form-control"  name="email">
+                    <label for="fname">สารที่ทดสอบ</label>
+                    <input type="text" class="form-control"  name="material" placeholder="สารที่ทดสอบ" required>
                 </div>
+                <div class="form-group">
+                    <label for="fname">บันทึกถึงนักวิทยาศาสตร์</label>
+                    <input type="text" class="form-control"  name="comment" placeholder="บันทึก" >
+                </div>
+                <label for="fname">วันที่ใช้เครื่องมือ</label>
                 <div class='input-group date' id='datetimepicker1' >
-                    <label for="fname">วันที่ใช้เครื่องมือ</label>
-                    <input type='text' class="form-control" name="instru_date">
+                    <input type='text' class="form-control" name="instru_date" required>
                     <span class="input-group-addon">
                     <span class="glyphicon glyphicon-calendar">
                     </span>
                 </div>
                 <br>
-                <label for="fname">เวลาใช้เครื่องมือ</label> 
-                <div class="form-group"> 
-                    <input type="checkbox" class="form-control" value="time_1" name="time">09:00 - 12:00 (3 Hrs)
-                    <input type="checkbox" class="form-control" value="time_2" name="time">13:00 - 16:00 (3 Hrs)
+                <label for="fname">เวลาใช้เครื่องมือ</label>
+                <div class="container">
+                    <div class="row">
+                        <div class="column">
+                            <div class="form-group"> 
+                                <input type="checkbox" value="time_09" name="time">&nbsp;&nbsp; 09:00 - 10:00 (1 Hr)<br>
+                                <input type="checkbox" value="time_10" name="time">&nbsp;&nbsp; 10:00 - 11:00 (1 Hr)<br>
+                                <input type="checkbox" value="time_11" name="time">&nbsp;&nbsp; 11:00 - 12:00 (1 Hr)<br>
+                                <input type="checkbox" value="time_13" name="time">&nbsp;&nbsp; 13:00 - 14:00 (1 Hr)<br>
+                                <input type="checkbox" value="time_14" name="time">&nbsp;&nbsp; 14:00 - 15:00 (1 Hr)<br>
+                                <input type="checkbox" value="time_15" name="time">&nbsp;&nbsp; 15:00 - 16:00 (1 Hr)<br>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="form-group">
+                                <input type="checkbox" value="time_0912" name="time">&nbsp;&nbsp; 09:00 - 12:00 (3 Hrs)<br>
+                                <input type="checkbox" value="time_1316" name="time">&nbsp;&nbsp; 13:00 - 16:00 (3 Hrs)<br>
+                            </div>
+                        </div>
+                        <div class="column">
+                            <div class="form-group">
+                                <input type="checkbox" value="time_0916" name="time">&nbsp;&nbsp; 09:00 - 16:00 (6 Hrs)<br>
+                            </div>
+                        </div>
+                    </div>
                 </div>
+                <br>
+                <p>- กรุณาจองล่วงหน้า ก่อนเวลา 16.00 น. เพื่อจองเข้าใช้ในวันทำการถัดไป</p>
+                <p>- เข้าใช้งานเครื่องมือได้หลังจากได้รับอนุมัติแล้วเท่านั้น</p>
+                <br>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success" value="Submit">บันทึก</button>
                     <button type="reset" class="btn btn-danger" value="Reset">Clear</button>
@@ -56,7 +92,7 @@
         $('#datetimepicker1').datetimepicker({
             daysOfWeekDisabled: [0, 6],
             format: 'L',
-            format: 'DD-MM-YYYY'
+            format: 'YYYY-MM-DD'
         });
     });
 </script>

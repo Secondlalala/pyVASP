@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Bootstrap Template</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+    <!-- HTML5 shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!--[if lt IE 9]>
+      <script src="../../assets/js/html5shiv.js"></script>
+      <script src="../../assets/js/respond.min.js"></script>
+    <![endif]-->
+  </head>
+  <body>
+    <div class = "container">
+      <h1>Hello, world!</h1>
+      <table class="table table-bordered">
+        <thead>
+          <tr>
+            <th>ลำดับที่</th>
+            <th>ชื่อ</th>
+            <th>นามสกุล</th>
+            <th>โทรศัพท์</th>
+            <th>Action</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for row in datas %}
+          <tr>
+            <td>{{row.0}}</td>
+            <td>{{row.1}}</td>
+            <td>{{row.2}}</td>
+            <td>{{row.3}}</td>
+            <td>
+              <a href="" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.0}}">Edit</a>
+              <a href="/delete/{{ row.0 }}" class="btn btn-danger btn-xs" onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่?')">Delete</a>
+            </td>
+          </tr>
+            {% endfor %}
+        </tbody>
+      </table>
+      <a href="/student" class="btn btn-primary">เพิ่มรายชื่อใหม่</a>
+    </div>
+  </body>
+</html>

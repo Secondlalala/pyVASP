@@ -1,0 +1,34 @@
+{% extends "fesem_base.html" %}
+
+{% block content %}
+<h4 align='center'>FESEM - EDX</h4>
+<br>
+<div class="container">
+    <div class="panel panel-info">
+        <div class="panel-heading"><h4 align='center'></h4>Reset Password</h4></div>
+        <div class="panel-body">
+            <form action="{{ url_for('fesem_reset_password') }}" method="post">
+                <div class="form-group">
+                    <label for="fname">Username</label>
+                    <input type="text" class="form-control"  name="username" placeholder="Username" required>
+                </div>
+                <div class="form-group">
+                    <label for="fname">Email</label>
+                    <input type="email" class="form-control"  name="email" placeholder="Email" required>
+                </div>
+                <div class="form-group">
+                    <label for="fname">โทรศัพท์</label>
+                    <input type="text" class="form-control"  name="phone" placeholder="080-0000000" required>
+                </div>
+                <br>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" value="Submit">บันทึก</button>
+                    <button type="reset" class="btn btn-danger" value="Reset">Clear</button>
+                    
+                    <a href="/fesem/{{ year }}-{{ monx }}" class="pull-right btn btn-primary">กลับหน้าแรก</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

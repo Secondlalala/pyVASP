@@ -1,0 +1,23 @@
+{% extends "fesem_base.html" %}
+
+{% block content %}
+<h1 align='center'>เข้าสู่ระบบ</h1>
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">Sign In</div>
+        <div class="panel-body">
+            <form class="form-signin" action="fesem_validateLogin" method="post">
+                <label for="inputUsername" class="sr-only">Username</label>
+                <input type="text" name="inputUsername" id="inputUsername" class="form-control" placeholder="Username" required>
+                <br>
+                <label for="inputPassword" class="sr-only">Password</label>
+                <input type="password" name="inputPassword" id="inputPassword" class="form-control" placeholder="Password" required>
+                <br>
+                <button id="btnSignIn" class="btn btn-primary" type="submit">Login</button>
+                <a href="{{ url_for('fesem_reset') }}" class="btn btn-warning">Reset Password</a>
+                <a href="{{ url_for('fesem_createuser') }}" class="btn pull-right btn-info">Create User</a>
+            </form>
+        </div>
+    </div>
+</div>
+{% endblock %}

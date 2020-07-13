@@ -1,0 +1,84 @@
+{% extends "fesem_base.html" %}
+
+{% block content %}
+<h1 align='center'>Welcome : {{ user }}</h1>
+<h4 align='center'>FESEM-EDX</h4>
+<br>
+<div class="container">
+    <div class="panel panel-primary">
+        <div class="panel-heading">ระบบจองใช้เครื่องมือ FESEM-EDX</div>
+        <div class="panel-body">
+            <form action="{{ url_for('fesem_check') }}" method="post">
+                <input type="hidden" class="form-control"  name="edit" value="0">
+                <div class="form-group">
+                    <label for="fname">เครื่องมือ</label><br>
+                    <input type="radio" id="fesem" name="instrument" value="FE only : 3,500 ฿/hr" >
+                    <label for="XRD">&nbsp;&nbsp;FE only : 3,500 ฿/hr</label><br>
+                    <input type="radio" id="fesem" name="instrument" value="FE + EDS : 4,000 ฿/hr" >
+                    <label for="XRD">&nbsp;&nbsp;FE + EDS : 4,000 ฿/hr</label><br>
+                </div>
+                <div class="form-group">
+                    <label for="fname">สารที่ทดสอบ</label>
+                    <input type="text" class="form-control"  name="material" placeholder="สารที่ทดสอบ" required>
+                </div>
+                <div class="form-group">
+                    <label for="fname">ขนาดของชิ้นงาน</label>
+                    <input type="text" class="form-control"  name="size" placeholder="1 x 1 cm." required>
+                </div>
+                <div class="form-group">
+                    <label for="fname">สิ่งที่ต้องการตรวจสอบ</label>
+                    <input type="text" class="form-control"  name="examine" placeholder="ขนาดของวัตถุ, ขนาดของอนุภาค" required>
+                </div>
+                <div class="form-group">
+                    <label for="fname">จำนวนชิ้นงาน</label>
+                    <input type="text" class="form-control"  name="number" placeholder="1" required>
+                </div>
+                <div class="form-group">
+                    <label for="fname">ต้องการเคลือบทอง (500 ฿/ครั้ง/12 วินาที)</label><br>
+                    <input type="radio" id="coating" name="coating" value="coating" >
+                    <label for="XRD">&nbsp;&nbsp;Au coating</label><br>
+                </div>
+                <div class="form-group">
+                    <label for="fname">บันทึกถึงนักวิทยาศาสตร์</label>
+                    <input type="text" class="form-control"  name="comment" placeholder="บันทึก" >
+                </div>
+                <label for="fname">วันที่ใช้เครื่องมือ</label>
+                <div class='input-group date' id='datetimepicker1' >
+                    <input type='text' class="form-control" name="instru_date" required>
+                    <span class="input-group-addon">
+                    <span class="glyphicon glyphicon-calendar">
+                    </span>
+                </div>
+                <br>
+                <label for="fname">เวลาใช้เครื่องมือ</label>
+                <div class="container">
+                    <div class="form-group">
+                        <input type="checkbox" value="time_0912" name="time">&nbsp;&nbsp; 09:00 - 12:00 (3 Hrs)<br>
+                        <input type="checkbox" value="time_1316" name="time">&nbsp;&nbsp; 13:00 - 16:00 (3 Hrs)<br>
+                    </div>
+                </div>
+                <br>
+                <p>- กรุณาจองล่วงหน้า ก่อนเวลา 16.00 น. เพื่อให้ operator ทำการตรวจสอบการจองของท่าน</p>
+                <p>- เข้าใช้งานเครื่องมือได้หลังจากได้รับอนุมัติแล้วเท่านั้น</p>
+                <br>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" value="Submit">บันทึก</button>
+                    <button type="reset" class="btn btn-danger" value="Reset">Clear</button>
+                    
+                    <a href="/" class="pull-right btn btn-primary">กลับหน้าแรก</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            daysOfWeekDisabled: [0, 6],
+            format: 'L',
+            format: 'YYYY-MM-DD'
+        });
+    });
+</script>
+{% endblock %}

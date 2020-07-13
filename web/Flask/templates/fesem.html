@@ -1,0 +1,174 @@
+{% extends "fesem_base.html" %}
+
+{% block content %}
+<h2 align='center'>Field Emission Scanning Electron Microscope and Energy Dispersive X-ray Spectrometer</h2><h2 align='center'>(FESEM-EDS)</h2>
+<br>
+<div class="container">
+    <br>
+    <table border="0" cellpadding="0" cellspacing="0" class="month" style="center" align="center">
+        <tr style="background-color:gainsboro">
+            <th colspan="7" style="text-align:center" >
+                <div class="row">
+                    <div class="column" class="pull-left">
+                        {% set monx = month-1 %}
+                        {% if monx == -1 %}
+                            {% set monx = 12 %}
+                            {% set year = year - 1 %}
+                        {% endif %}                        
+                        <a href="/fesem/{{ year }}-{{ monx }}" "><< Previous {{ monx }}</a>
+                    </div>
+                    <div class="column">{{ month_text }} {{ year }}</div>
+                    <div class="column" class="pull-right">
+                        {% set monx = month+1 %}
+                        {% if monx == 13 %}
+                            {% set monx = 1 %}
+                            {% set year = year + 1 %}
+                        {% endif %}
+                        <a href="/fesem/{{ year }}-{{ monx }}" ">{{ monx }} Next >></a>
+                    </div>
+                </div>
+            </th>
+        </tr>
+        <tr style="background-color:gainsboro">
+            <th style="text-align:center">Sunday</th>
+            <th style="text-align:center">Monday</th>
+            <th style="text-align:center">Tuesday</th>
+            <th style="text-align:center">Wednesday</th>
+            <th style="text-align:center">Thursday</th>
+            <th style="text-align:center">Friday</th>
+            <th style="text-align:center">Saturday</th>
+        </tr>
+        {% for row in range(total) %}
+        {% set i = row*7 %}
+        <tr>
+            <!-- SUNDAY -->
+            {% if status[i][0] == 0 %}
+                <td>{% set i = i+1 %}</td>
+            {% elif status[i][1] == 'weekend' %}
+                <td style="background-color:gainsboro"><b>{{ status[i][0] }}</b> - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% else %}
+                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% endif %}
+
+            <!-- MONDAY -->
+            {% if status[i][0] == 0 %}
+                <td>{% set i = i+1 %}</td>
+            {% elif status[i][1] == '2' %}
+                <td style="background-color:red"><b>{{ status[i][0] }}</b> - [<span style="color:white"> 09-12 / 13-16 </span>] {% set i = i+1 %} </td>
+            {% elif status[i][1] == '1' %}
+                <td style="background-color:orange">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">09-12</span>{% else %}<span style="color:red">09-12</span>{% endif %} / 
+                    {% if "13" in status[i][2] %}<span style="color:green">13-16</span>{% else %}<span style="color:red">13-16</span>{% endif %} 
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == 'weekend' %}
+                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% else %}
+                <td><b>{{ status[i][0] }}</b> - [ <span style="color:green"> 09-12 / 13-16 </span>] {% set i = i+1 %} </td>
+            {% endif %}
+
+            <!-- TUESDAY -->
+            {% if status[i][0] == 0 %}
+                <td>{% set i = i+1 %}</td>
+            {% elif status[i][1] == '2' %}
+                <td style="background-color:red"><b>{{ status[i][0] }}</b> - [<span style="color:white"> 09-12 / 13-16 </span>] {% set i = i+1 %} </td>
+            {% elif status[i][1] == '1' %}
+                <td style="background-color:orange">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">09-12</span>{% else %}<span style="color:red">09-12</span>{% endif %} / 
+                    {% if "13" in status[i][2] %}<span style="color:green">13-16</span>{% else %}<span style="color:red">13-16</span>{% endif %} 
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == 'weekend' %}
+                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% else %}
+                <td><b>{{ status[i][0] }}</b> - [ <span style="color:green"> 09-12 / 13-16 </span>] {% set i = i+1 %} </td>
+            {% endif %}
+
+            <!-- WEDNESDAY -->
+            {% if status[i][0] == 0 %}
+                <td>{% set i = i+1 %}</td>
+            {% elif status[i][1] == '2' %}
+                <td style="background-color:red"><b>{{ status[i][0] }}</b> - [<span style="color:white"> 09-12 / 13-16 </span>] {% set i = i+1 %} </td>
+            {% elif status[i][1] == '1' %}
+                <td style="background-color:orange">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">09-12</span>{% else %}<span style="color:red">09-12</span>{% endif %} / 
+                    {% if "13" in status[i][2] %}<span style="color:green">13-16</span>{% else %}<span style="color:red">13-16</span>{% endif %} 
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == 'weekend' %}
+                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% else %}
+                <td><b>{{ status[i][0] }}</b> - [ <span style="color:green"> 09-12 / 13-16 </span>] {% set i = i+1 %} </td>
+            {% endif %}
+
+            <!-- THERSDAY -->
+            {% if status[i][0] == 0 %}
+                <td>{% set i = i+1 %}</td>
+            {% elif status[i][1] == '2' %}
+                <td style="background-color:red"><b>{{ status[i][0] }}</b> - [<span style="color:white"> 09-12 / 13-16 </span>] {% set i = i+1 %} </td>
+            {% elif status[i][1] == '1' %}
+                <td style="background-color:orange">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">09-12</span>{% else %}<span style="color:red">09-12</span>{% endif %} / 
+                    {% if "13" in status[i][2] %}<span style="color:green">13-16</span>{% else %}<span style="color:red">13-16</span>{% endif %} 
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == 'weekend' %}
+                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% else %}
+                <td><b>{{ status[i][0] }}</b> - [ <span style="color:green"> 09-12 / 13-16 </span>] {% set i = i+1 %} </td>
+            {% endif %}
+
+            <!-- FRIDAY -->
+            {% if status[i][0] == 0 %}
+                <td>{% set i = i+1 %}</td>
+            {% elif status[i][1] == '2' %}
+                <td style="background-color:red"><b>{{ status[i][0] }}</b> - [<span style="color:white"> 09-12 / 13-16 </span>] {% set i = i+1 %} </td>
+            {% elif status[i][1] == '1' %}
+                <td style="background-color:orange">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">09-12</span>{% else %}<span style="color:red">09-12</span>{% endif %} / 
+                    {% if "13" in status[i][2] %}<span style="color:green">13-16</span>{% else %}<span style="color:red">13-16</span>{% endif %} 
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == 'weekend' %}
+                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% else %}
+                <td><b>{{ status[i][0] }}</b> - [ <span style="color:green"> 09-12 / 13-16 </span>] {% set i = i+1 %} </td>
+            {% endif %}
+
+            <!-- SATURDAY -->
+            {% if status[i][0] == 0 %}
+                <td>{% set i = i+1 %}</td>
+            {% elif status[i][1] == 'weekend' %}
+                <td style="background-color:gainsboro"><b>{{ status[i][0] }}</b> - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% else %}
+                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </table>
+    <br>
+    
+    {% if user %}
+        <a href="{{ url_for('add_form') }}" class="btn btn-success">จองใช้เครื่องมือ</a>
+    {% endif %}
+    <span class="pull-right">Updated : <span id="datetime"></span></span>
+    <script>
+        var dt = new Date();
+        document.getElementById("datetime").innerHTML = dt.toLocaleString();
+    </script>
+    <script>
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                daysOfWeekDisabled: [0, 6],
+                format: 'L',
+                format: 'YYYY-MM-DD'
+            });
+        });
+    </script>
+</div>
+{% endblock %}

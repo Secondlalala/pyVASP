@@ -1,0 +1,86 @@
+{% extends "fesem_base.html" %}
+
+{% block content %}
+<h1 align='center'>Welcome : {{ user }}</h1>
+<h4 align='center'>FESEM-EDX</h4>
+<br>
+<div class="container">
+    <div class="panel panel-warning">
+        <div class="panel-heading">แก้ไขการจองใช้เครื่องมือ</div>
+        <div class="panel-body">
+            <form action="{{ url_for('fesem_check') }}" method="post">
+                {% for row in data %}
+                <div class="form-group">
+                    <input type="hidden" class="form-control"  name="edit" value="1">
+                    <label for="fname">เลขที่การจอง : {{ row.0 }}</label>
+                    <input type="hidden" class="form-control"  name="id" value="{{ row.0 }}">
+                </div>
+                <div class="form-group">
+                    <label for="fname">เครื่องมือ : {{ row.2 }}</label>
+                    <input type="hidden" class="form-control"  name="instrument" value="{{ row.2 }}">
+                </div>
+                <div class="form-group">
+                    <label for="fname">สารที่ทดสอบ</label>
+                    <input type="text" class="form-control"  name="material" value="{{ row.3 }}">
+                </div>
+                <div class="form-group">
+                    <label for="fname">ขนาดของชิ้นงาน</label>
+                    <input type="text" class="form-control"  name="size" value="{{ row.4 }}">
+                </div>
+                <div class="form-group">
+                    <label for="fname">สิ่งที่ต้องการตรวจสอบ</label>
+                    <input type="text" class="form-control"  name="examine" value="{{ row.5 }}">
+                </div>
+                <div class="form-group">
+                    <label for="fname">จำนวนชิ้นงาน</label>
+                    <input type="text" class="form-control"  name="number" value="{{ row.6 }}">
+                </div>
+                <div class="form-group">
+                    <label for="fname">ต้องการเคลือบทอง (500 ฿/ครั้ง/12 วินาที)</label><br>
+                    {% if coating == 1 %}
+                        <input type="radio" id="coating" name="coating" value="coating" checked>
+                    {% else %}
+                        <input type="radio" id="coating" name="coating" value="coating" >
+                    {% endif %}
+                    <label for="XRD">&nbsp;&nbsp;Au coating</label><br>
+                </div>
+                <div class="form-group">
+                    <label for="fname">บันทึกถึงนักวิทยาศาสตร์</label>
+                    <input type="text" class="form-control"  name="comment" placeholder="{{ row.8 }}" >
+                </div>
+                <div class="form-group">
+                    <label for="fname">วันที่ใช้เครื่องมือ :  {{ row.10 }}</label>
+                    <input type='hidden' class="form-control" name="instru_date" value="{{ row.10 }}">
+                </div>
+                <label for="fname">เวลาใช้เครื่องมือ</label> 
+                <div class="form-group">
+                    {% if row.11 == 1 %}
+                        <input type="hidden" class="form-control" value="time_0912" name="time" checked>09:00 - 12:00 (3 Hr)<br>
+                    {% endif %}
+                    {% if row.12 == 1 %}
+                        <input type="hidden" class="form-control" value="time_1316" name="time" checked>13:00 - 16:00 (3 Hr)<br>
+                    {% endif %}
+                </div>
+                {% endfor %}
+                <br>
+                <div class="form-group">
+                    <button type="submit" class="btn btn-success" value="Submit">บันทึก</button>
+                    <button type="reset" class="btn btn-danger" value="Reset">Clear</button>
+                    
+                    <a href="/fesem/{{ year }}-{{ monx }}" class="pull-right btn btn-primary">กลับหน้าแรก</a>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+<script>
+    $(function () {
+        $('#datetimepicker1').datetimepicker({
+            daysOfWeekDisabled: [0, 6],
+            format: 'L',
+            format: 'YYYY-MM-DD',
+        });
+    });
+</script>
+{% endblock %}

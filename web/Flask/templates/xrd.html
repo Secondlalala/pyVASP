@@ -1,0 +1,496 @@
+{% extends "base.html" %}
+
+{% block content %}
+<h1 align='center'>เครื่องมือ X-ray Diffractometer (XRD)</h1>
+<h4 align='center'>ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี</h4>
+<h4 align='center'>วิทยาลัยนาโนเทคโนโลยีพระจอมเกล้าลาดกระบัง</h4>
+<div class="container">
+    <br>
+    <table border="0" cellpadding="0" cellspacing="0" class="month" style="center" align="center">
+        <tr style="background-color:gainsboro">
+            <th colspan="7" style="text-align:center" >
+                <div class="row">
+                    <div class="column" class="pull-left">
+                        {% set monx = month-1 %}
+                        {% if monx == -1 %}
+                            {% set monx = 12 %}
+                            {% set year = year - 1 %}
+                        {% endif %}                        
+                        <a href="/xrd/{{ year }}-{{ monx }}" "><< Previous {{ monx }}</a>
+                    </div>
+                    <div class="column">{{ month_text }} {{ year }}</div>
+                    <div class="column" class="pull-right">
+                        {% set monx = month+1 %}
+                        {% if monx == 13 %}
+                            {% set monx = 1 %}
+                            {% set year = year + 1 %}
+                        {% endif %}
+                        <a href="/xrd/{{ year }}-{{ monx }}" ">{{ monx }} Next >></a>
+                    </div>
+                </div>
+            </th>
+        </tr>
+        <tr style="background-color:gainsboro">
+            <th style="text-align:center">Sunday</th>
+            <th style="text-align:center">Monday</th>
+            <th style="text-align:center">Tuesday</th>
+            <th style="text-align:center">Wednesday</th>
+            <th style="text-align:center">Thursday</th>
+            <th style="text-align:center">Friday</th>
+            <th style="text-align:center">Saturday</th>
+        </tr>
+        {% for row in range(total) %}
+        {% set i = row*7 %}
+        <tr>
+            <!-- SUNDAY -->
+            {% if status[i][0] == 0 %}
+                <td>{% set i = i+1 %}</td>
+            {% elif status[i][1] == 'weekend' %}
+                <td style="background-color:gainsboro"><b>{{ status[i][0] }}</b> - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% else %}
+                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% endif %}
+
+            <!-- MONDAY -->
+            {% if status[i][0] == 0 %}
+                <td>{% set i = i+1 %}</td>
+            {% elif status[i][1] == '6' %}
+                <td style="background-color:red"><b>{{ status[i][0] }}</b> - [<span style="color:white"> 9 10 11 13 14 15 </span>] {% set i = i+1 %} </td>
+            {% elif status[i][1] == '5' %}
+                <td style="background-color:darkorange">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '4' %}
+                <td style="background-color:darkorange">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '3' %}
+                <td style="background-color:lightsalmon">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '2' %}
+                <td style="background-color:peachpuff">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '1' %}
+                <td style="background-color:peachpuff">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == 'weekend' %}
+                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% else %}
+                <td><b>{{ status[i][0] }}</b> - [ <span style="color:green"> 9 10 11 13 14 15 </span>] {% set i = i+1 %} </td>
+            {% endif %}
+
+            <!-- TUESDAY -->
+            {% if status[i][0] == 0 %}
+                <td>{% set i = i+1 %}</td>
+            {% elif status[i][1] == '6' %}
+                <td style="background-color:red"><b>{{ status[i][0] }}</b> - [<span style="color:white"> 9 10 11 13 14 15 </span>] {% set i = i+1 %} </td>
+                {% elif status[i][1] == '5' %}
+                <td style="background-color:darkorange">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '4' %}
+                <td style="background-color:darkorange">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '3' %}
+                <td style="background-color:lightsalmon">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '2' %}
+                <td style="background-color:peachpuff">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '1' %}
+                <td style="background-color:peachpuff">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == 'weekend' %}
+                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% else %}
+                <td><b>{{ status[i][0] }}</b> - [ <span style="color:green"> 9 10 11 13 14 15 </span>] {% set i = i+1 %} </td>
+            {% endif %}
+
+            <!-- WEDNESDAY -->
+            {% if status[i][0] == 0 %}
+                <td>{% set i = i+1 %}</td>
+            {% elif status[i][1] == '6' %}
+                <td style="background-color:red"><b>{{ status[i][0] }}</b> - [<span style="color:white"> 9 10 11 13 14 15 </span>] {% set i = i+1 %} </td>
+            {% elif status[i][1] == '5' %}
+                <td style="background-color:darkorange">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '4' %}
+                <td style="background-color:darkorange">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '3' %}
+                <td style="background-color:lightsalmon">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '2' %}
+                <td style="background-color:peachpuff">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '1' %}
+                <td style="background-color:peachpuff">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == 'weekend' %}
+                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% else %}
+                <td><b>{{ status[i][0] }}</b> - [ <span style="color:green"> 9 10 11 13 14 15 </span>] {% set i = i+1 %} </td>
+            {% endif %}
+
+            <!-- THERSDAY -->
+            {% if status[i][0] == 0 %}
+                <td>{% set i = i+1 %}</td>
+            {% elif status[i][1] == '6' %}
+                <td style="background-color:red"><b>{{ status[i][0] }}</b> - [<span style="color:white"> 9 10 11 13 14 15 </span>] {% set i = i+1 %} </td>
+            {% elif status[i][1] == '5' %}
+                <td style="background-color:darkorange">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '4' %}
+                <td style="background-color:darkorange">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '3' %}
+                <td style="background-color:lightsalmon">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '2' %}
+                <td style="background-color:peachpuff">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '1' %}
+                <td style="background-color:peachpuff">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == 'weekend' %}
+                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% else %}
+                <td><b>{{ status[i][0] }}</b> - [ <span style="color:green"> 9 10 11 13 14 15 </span>] {% set i = i+1 %} </td>
+            {% endif %}
+
+            <!-- FRIDAY -->
+            {% if status[i][0] == 0 %}
+                <td>{% set i = i+1 %}</td>
+            {% elif status[i][1] == '6' %}
+                <td style="background-color:red"><b>{{ status[i][0] }}</b> - [<span style="color:white"> 9 10 11 13 14 15 </span>] {% set i = i+1 %} </td>
+            {% elif status[i][1] == '5' %}
+                <td style="background-color:darkorange">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '4' %}
+                <td style="background-color:darkorange">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '3' %}
+                <td style="background-color:lightsalmon">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '2' %}
+                <td style="background-color:peachpuff">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == '1' %}
+                <td style="background-color:peachpuff">
+                    <b>{{ status[i][0] }}</b> - [
+                    {% if  "9" in status[i][2] %}<span style="color:green">9</span>{% else %}<span style="color:red">9</span>{% endif %} 
+                    {% if "10" in status[i][2] %}<span style="color:green">10</span>{% else %}<span style="color:red">10</span>{% endif %} 
+                    {% if "11" in status[i][2] %}<span style="color:green">11</span>{% else %}<span style="color:red">11</span>{% endif %} 
+                    {% if "13" in status[i][2] %}<span style="color:green">13</span>{% else %}<span style="color:red">13</span>{% endif %} 
+                    {% if "14" in status[i][2] %}<span style="color:green">14</span>{% else %}<span style="color:red">14</span>{% endif %} 
+                    {% if "15" in status[i][2] %}<span style="color:green">15</span>{% else %}<span style="color:red">15</span>{% endif %}
+                    ] {% set i = i+1 %}
+                </td>
+            {% elif status[i][1] == 'weekend' %}
+                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% else %}
+                <td><b>{{ status[i][0] }}</b> - [ <span style="color:green"> 9 10 11 13 14 15 </span>] {% set i = i+1 %} </td>
+            {% endif %}
+
+            <!-- SATURDAY -->
+            {% if status[i][0] == 0 %}
+                <td>{% set i = i+1 %}</td>
+            {% elif status[i][1] == 'weekend' %}
+                <td style="background-color:gainsboro"><b>{{ status[i][0] }}</b> - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% else %}
+                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+        </table>
+    <br>
+    <table class="table table-bordered" align="center">
+        <thead>
+            <tr style="background-color:gainsboro">
+                <th style="text-align:center">เลขที่การจอง</th>
+                <th style="text-align:center">ผู้ทำการจอง</th>
+                <th style="text-align:center">วันที่ใช้เครื่องมือ</th>
+                <th style="text-align:center">09-10</th>
+                <th style="text-align:center">10-11</th>
+                <th style="text-align:center">11-12</th>
+                <th style="text-align:center">13-14</th>
+                <th style="text-align:center">14-15</th>
+                <th style="text-align:center">15-16</th>
+                <th style="text-align:center">สถานะ</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% set count = {'value': 0} %}
+            {% for row in data %}
+            {% if count.value is divisibleby(2) %}
+            <tr style="background-color:white">
+            {% else %}
+            <tr style="background-color:ivory">
+            {% endif %}
+                <td style="text-align:center">{{ row.0 }}</td>
+                <td>{{ row.22 }}</td>
+                <td style="text-align:center">{{ row.6 }}</td>
+                <td style="text-align:center">
+                    {% if row.7 == 1 %}
+                        &#x2713;
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.8 == 1 %}
+                        &#x2713;
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.9 == 1 %}
+                        &#x2713;
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.10 == 1 %}
+                        &#x2713;
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.11 == 1 %}
+                        &#x2713;
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.12 == 1 %}
+                        &#x2713;
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.13 == "Approve" %}
+                        <span style="color:green">{{ row.13 }}</span>
+                    {% elif row.13 == "Rejected" %}
+                        <span style="color:red">{{ row.13 }}</span>
+                    {% else %}
+                        {{ row.13 }}
+                    {% endif %}
+                </td>
+            </tr>
+            {% if count.update({'value': (count.value + 1)}) %} {% endif %}
+            {% endfor %}
+        </tbody>
+    </table>
+    {% if user %}
+        <a href="{{ url_for('add_form') }}" class="btn btn-success">จองใช้เครื่องมือ</a>
+    {% endif %}
+    <span class="pull-right">Updated : <span id="datetime"></span></span>
+    <script>
+        var dt = new Date();
+        document.getElementById("datetime").innerHTML = dt.toLocaleString();
+    </script>
+    <script>
+        $(function () {
+            $('#datetimepicker1').datetimepicker({
+                daysOfWeekDisabled: [0, 6],
+                format: 'L',
+                format: 'YYYY-MM-DD'
+            });
+        });
+    </script>
+</div>
+{% endblock %}

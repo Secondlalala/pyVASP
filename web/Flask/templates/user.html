@@ -1,225 +1,156 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 align='center'>ศูนย์เครื่องมือ SEM</h1>
-{% if user %}
-<h3>Welcome : {{ user }}</h3>
-{% endif %}
+<h1 align='center'>Welcome : {{ user }} / Credit : {{ credit }}</h1>
+<h4 align='center'>ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี</h4>
+<h4 align='center'>วิทยาลัยนาโนเทคโนโลยีพระจอมเกล้าลาดกระบัง</h4>
+<br>
 <div class="container">
-    <br>
-    <table border="0" cellpadding="0" cellspacing="0" class="month" style="center" align="center">
-        <tr style="background-color:gainsboro">
-            <th colspan="7" style="text-align:center" >
-                <div class="row">
-                    <div class="column" class="pull-left">
-                        {% set monx = mon-1 %}
-                        <a href="/user/{{ year }}-{{ monx }}" "><< Previous {{ monx }}</a>
-                    </div>
-                    <div class="column">{{ month }} {{ year }}</div>
-                    <div class="column" class="pull-right">
-                        {% set monx = mon+1 %}
-                        <a href="/user/{{ year }}-{{ monx }}" ">{{ monx }} Next >></a>
-                    </div>
-                </div>
-            </th>
-        </tr>
-        <tr style="background-color:gainsboro">
-            <th style="text-align:center">Sunday</th>
-            <th style="text-align:center">Monday</th>
-            <th style="text-align:center">Tuesday</th>
-            <th style="text-align:center">Wednesday</th>
-            <th style="text-align:center">Thursday</th>
-            <th style="text-align:center">Friday</th>
-            <th style="text-align:center">Saturday</th>
-        </tr>
-        {% for row in range(total) %}
-        {% set i = row*7 %}
-        <tr>
-            <!-- SUNDAY -->
-            {% if status[i][0] == 0 %}
-                <td>{% set i = i+1 %}</td>
-            {% elif status[i][1] == 'Full' %}
-                <td style="background-color:#FF0000">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'weekend' %}
-                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'Morning' or status[i][1] == 'Afternoon' %}
-                <td style="background-color:khaki">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% else %}
-                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% endif %}
-
-            <!-- MONDAY -->
-            {% if status[i][0] == 0 %}
-                <td>{% set i = i+1 %}</td>
-            {% elif status[i][1] == 'Full' %}
-                <td style="background-color:#FF0000">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'weekend' %}
-                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'Morning' or status[i][1] == 'Afternoon' %}
-                <td style="background-color:khaki">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% else %}
-                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% endif %}
-
-            <!-- TUESDAY -->
-            {% if status[i][0] == 0 %}
-                <td>{% set i = i+1 %}</td>
-            {% elif status[i][1] == 'Full' %}
-                <td style="background-color:#FF0000">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'weekend' %}
-                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'Morning' or status[i][1] == 'Afternoon' %}
-                <td style="background-color:khaki">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% else %}
-                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% endif %}
-
-            <!-- WEDNESDAY -->
-            {% if status[i][0] == 0 %}
-                <td>{% set i = i+1 %}</td>
-            {% elif status[i][1] == 'Full' %}
-                <td style="background-color:#FF0000">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'weekend' %}
-                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'Morning' or status[i][1] == 'Afternoon' %}
-                <td style="background-color:khaki">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% else %}
-                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% endif %}
-
-            <!-- THERSDAY -->
-            {% if status[i][0] == 0 %}
-                <td>{% set i = i+1 %}</td>
-            {% elif status[i][1] == 'Full' %}
-                <td style="background-color:#FF0000">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'weekend' %}
-                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'Morning' or status[i][1] == 'Afternoon' %}
-                <td style="background-color:khaki">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% else %}
-                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% endif %}
-
-            <!-- FRIDAY -->
-            {% if status[i][0] == 0 %}
-                <td>{% set i = i+1 %}</td>
-            {% elif status[i][1] == 'Full' %}
-                <td style="background-color:#FF0000">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'weekend' %}
-                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'Morning' or status[i][1] == 'Afternoon' %}
-                <td style="background-color:khaki">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% else %}
-                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% endif %}
-
-            <!-- SATURDAY -->
-            {% if status[i][0] == 0 %}
-                <td>{% set i = i+1 %}</td>
-            {% elif status[i][1] == 'Full' %}
-                <td style="background-color:#FF0000">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'weekend' %}
-                <td style="background-color:gainsboro">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% elif status[i][1] == 'Morning' or status[i][1] == 'Afternoon' %}
-                <td style="background-color:khaki">{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% else %}
-                <td>{{ status[i][0] }} - {{ status[i][1] }} {% set i = i+1 %} </td>
-            {% endif %}
-        </tr>
-        {% endfor %}
-        </table>
     <br>
     <table class="table table-bordered" align="center">
         <thead>
             <tr>
-                <th>เลขที่การจอง</th>
-                <th>ชื่อ-นามสกุล</th>
-                <th>หน่วยงาน</th>
-                <th>โทรศัพท์</th>
-                <th>e-mail</th>
-                <th>วันที่ทำการจอง</th>
-                <th>วันที่ใช้เครื่องมือ</th>
-                <th>เช้า</th>
-                <th>บ่าย</th>
-                <th>Action</th>
+                <th colspan="17" style="text-align:center" >
+                    <div class="row">
+                        <div class="column" class="pull-left">
+                            {% set monx = month-1 %}
+                            <a href="/user/{{ year }}-{{ monx }}" "><< Previous {{ monx }}</a>
+                        </div>
+                        <div class="column">{{ month_text }} {{ year }}</div>
+                        <div class="column" class="pull-right">
+                            {% set monx = month+1 %}
+                            <a href="/user/{{ year }}-{{ monx }}" ">{{ monx }} Next >></a>
+                        </div>
+                    </div>
+                </th>
+            </tr>
+            <tr style="background-color:gainsboro">
+                <th style="text-align:center">เลขที่การจอง</th>
+                <th style="text-align:center">เครื่องมือ</th>
+                <th style="text-align:center">ผู้ใช้งานเครื่องมือ</th>
+                <th style="text-align:center">หมายเลขโทรศัพท์</th>
+                <th style="text-align:center">สารที่ทดสอบ</th>
+                <th style="text-align:center">บันทึก</th>
+                <th style="text-align:center">วันที่ทำการจอง</th>
+                <th style="text-align:center">วันที่ใช้เครื่องมือ</th>
+                <th style="text-align:center">09-10</th>
+                <th style="text-align:center">10-11</th>
+                <th style="text-align:center">11-12</th>
+                <th style="text-align:center">13-14</th>
+                <th style="text-align:center">14-15</th>
+                <th style="text-align:center">15-16</th>
+                <th style="text-align:center">สถานะ</th>
+                <th style="text-align:center">ค่าใช้จ่าย</th>
+                <th style="text-align:center">Action</th>
             </tr>
         </thead>
         <tbody>
+            {% set count = {'value': 0} %}
             {% for row in data %}
-            <tr>
-                <td>{{ row.0 }}</td>
-                <td>{{ row.2 }}</td>
-                <td>{{ row.3 }}</td>
-                <td>{{ row.4 }}</td>
-                <td>{{ row.5 }}</td>
-                <td>{{ row.6 }}</td>
-                <td>{{ row.7 }}</td>
-                <td>{{ row.8 }}</td>
-                <td>{{ row.9 }}</td>
-                <td>
-                    <a href="" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.0}}">Edit</a>
-                    <a href="/delete/{{ row.0 }}" class="btn btn-danger btn-xs" onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่?')">Delete</a>
+            {% if count.value is divisibleby(2) %}
+            <tr style="background-color:white">
+            {% else %}
+            <tr style="background-color:ivory">
+            {% endif %}
+                <td style="text-align:center">{{ row.0 }}</td>
+                <td style="text-align:center">{{ row.22 }}</td>
+                <td style="text-align:center">{{ row.2 }}</td>
+                <td style="text-align:center">
+                    {% if row.3 %}
+                        {{ row.3 }}
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.4 %}
+                        {{ row.4 }}
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.17 %}
+                        {{ row.17 }}
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">{{ row.5 }}</td>
+                <td style="text-align:center">{{ row.6 }}</td>
+                <td style="text-align:center">
+                    {% if row.7 == 1 %}
+                        &#x2713;
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.8 == 1 %}
+                        &#x2713;
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.9 == 1 %}
+                        &#x2713;
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.10 == 1 %}
+                        &#x2713;
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.11 == 1 %}
+                        &#x2713;
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.12 == 1 %}
+                        &#x2713;
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.13 == "Approve" %}
+                        <span style="color:green">{{ row.13 }}</span>
+                    {% elif row.13 == "Pending" %}
+                        {{ row.13 }}
+                    {% else %}
+                        <span style="color:red">{{ row.13 }}</span>
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {{ row.15 }}
+                </td>
+                <td style="text-align:center">
+                    {% if action[count.value] > 0 %}
+                        {% if row.14 == "Top up" %}
+                            ---
+                        {% elif row.13 == "Pending" %}
+                            <a href="/edit/{{ row.0 }}" class="btn btn-warning btn-xs" onclick="return confirm('คุณต้องการแก้ไขข้อมูลหรือไม่?')">Edit</a>
+                            <a href="/cancel/{{ row.0 }}" class="btn btn-danger btn-xs" onclick="return confirm('คุณต้องการยกเลิกการจองหรือไม่?')">Cancel</a>
+                        {% elif row.13 == "Approve" %}
+                            <a href="/cancel/{{ row.0 }}" class="btn btn-danger btn-xs" onclick="return confirm('คุณต้องการยกเลิกการจองหรือไม่?')">Cancel</a>
+                        {% else %}
+                            ---
+                        {% endif %}
+                        {% if count.update({'value': (count.value + 1)}) %} {% endif %}
+                    {% else %}
+                        ---
+                        {% if count.update({'value': (count.value + 1)}) %} {% endif %}
+                    {% endif %}
                 </td>
             </tr>
-            <div id="modaledit{{row.0}}" class="modal fade" role="dialog">
-                <div class="modal-dialog">
-                    <div class="modal-content">
-                        <div class="modal-header">
-                            <button type="button" class="close" data-dismiss="modal">&times;</button>
-                            <h4 class="modal-title">แก้ไขการจอง</h4>
-                        </div>
-                        <div class="modal-body">
-                            <form action="/update" method="POST">
-                                <input type="hidden" name="id" value="{{row.0}}">
-                                <div class="form-group">
-                                    <label>ชื่อ-นามสกุล :</label>
-                                    <input type="text" class="form-control" name="name" value="{{row.2}}">
-                                </div>
-                                <div class="form-group">
-                                    <label>หน่วยงาน :</label>
-                                    <input type="text" class="form-control" name="department" value="{{row.3}}">
-                                </div>
-                                <div class="form-group">
-                                    <label>โทรศัพท์ :</label>
-                                    <input type="text" class="form-control" name="phone" value="{{row.4}}">
-                                </div>
-                                <div class="form-group">
-                                    <label>E-mail :</label>
-                                    <input type="text" class="form-control" name="email" value="{{row.5}}">
-                                </div>
-                                    <input type="hidden" name="ิbook_date" value="{{row.6}}">
-                                <div class='input-group date' id='datetimepicker1' >
-                                    <label for="fname">วันที่ใช้เครื่องมือ</label>
-                                    <input type="text" class="form-control" name="instru_date" value="{{row.7}}">
-                                    <span class="input-group-addon">
-                                    <span class="glyphicon glyphicon-calendar">
-                                    </span>
-                                </div>
-                                <div class="form-group">
-                                    <label>09:00 - 12:00 (3 Hrs) :</label>
-                                    {% if row.8 == 1 %}
-                                        <input type="checkbox" class="form-control" name="time" value="time_1" checked>
-                                    {% else %}
-                                        <input type="checkbox" class="form-control" name="time" value="time_1" >
-                                    {% endif %}
-                                </div>
-                                <div class="form-group">
-                                    <label>13:00 - 16:00 (3 Hrs) :</label>
-                                    {% if row.9 == 1 %}
-                                        <input type="checkbox" class="form-control" name="time" value="time_2" checked>
-                                    {% else %}
-                                        <input type="checkbox" class="form-control" name="time" value="time_2" >
-                                    {% endif %}
-                                </div>
-                                <div class="form-group">
-                                    <button class="btn btn-primary" type="submit">อัพเดท</button>
-                                    <button type="button" class="pull-right btn btn-default" data-dismiss="modal">Close</button>
-                                </div>
-                            </form>
-                        </div>
-                    </div>
-                </div>
-            </div>
             {% endfor %}
         </tbody>
     </table>

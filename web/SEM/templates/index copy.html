@@ -1,0 +1,137 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>Hello Python</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+    </head>
+    <body>
+        <h1 align='center'>ศูนย์เครื่องมือวิทยาลัยนาโนฯ V3.0</h1>
+        <div class="container">
+            <br>
+            <h2 align=center>Show calendar</h2>
+            <br>
+            <table class="table table-bordered" align="center">
+                <thead>
+                    <tr>
+                        <th>ลำดับที่</th>
+                        <th>ชื่อ-นามสกุล</th>
+                        <th>หน่วยงาน</th>
+                        <th>โทรศัพท์</th>
+                        <th>e-mail</th>
+                        <th>วันที่ทำการจอง</th>
+                        <th>วันที่ใช้เครื่องมือ</th>
+                        <th>เช้า</th>
+                        <th>บ่าย</th>
+                        <th>Action</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    {% for row in data %}
+                    <tr>
+                        <td>{{ row.0 }}</td>
+                        <td>{{ row.1 }}</td>
+                        <td>{{ row.2 }}</td>
+                        <td>{{ row.3 }}</td>
+                        <td>{{ row.4 }}</td>
+                        <td>{{ row.5 }}</td>
+                        <td>{{ row.6 }}</td>
+                        <td>{{ row.7 }}</td>
+                        <td>{{ row.8 }}</td>
+                        <td>
+                            <a href="" class="btn btn-warning btn-xs" data-toggle="modal" data-target="#modaledit{{row.0}}">Edit</a>
+                            <a href="/delete/{{ row.0 }}" class="btn btn-danger btn-xs" onclick="return confirm('คุณต้องการลบข้อมูลหรือไม่?')">Delete</a>
+                        </td>
+                    </tr>
+                    <div id="modaledit{{row.0}}" class="modal fade" role="dialog">
+                        <div class="modal-dialog">
+                            <div class="modal-content">
+                                <div class="modal-header">
+                                    <button type="button" class="close" data-dismiss="modal">&times;</button>
+                                    <h4 class="modal-title">แก้ไขการจอง</h4>
+                                </div>
+                                <div class="modal-body">
+                                    <form action="/update" method="POST">
+                                        <input type="hidden" name="id" value="{{row.0}}">
+                                        <div class="form-group">
+                                            <label>ชื่อ-นามสกุล :</label>
+                                            <input type="text" class="form-control" name="name" value="{{row.1}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>หน่วยงาน :</label>
+                                            <input type="text" class="form-control" name="department" value="{{row.2}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>โทรศัพท์ :</label>
+                                            <input type="text" class="form-control" name="phone" value="{{row.3}}">
+                                        </div>
+                                        <div class="form-group">
+                                            <label>E-mail :</label>
+                                            <input type="text" class="form-control" name="email" value="{{row.4}}">
+                                        </div>
+                                            <input type="hidden" name="ิbook_date" value="{{row.5}}">
+                                        <div class='input-group date' id='datetimepicker1' >
+                                            <label for="fname">วันที่ใช้เครื่องมือ</label>
+                                            <input type="text" class="form-control" name="instru_date" value="{{row.6}}">
+                                            <span class="input-group-addon">
+                                            <span class="glyphicon glyphicon-calendar">
+                                            </span>
+                                        </div>
+                                        <div class="form-group">
+                                            <label>09:00 - 12:00 (3 Hrs) :</label>
+                                            {% if row.7 == 1 %}
+                                                <input type="checkbox" class="form-control" name="time" value="time_1" checked>
+                                            {% else %}
+                                                <input type="checkbox" class="form-control" name="time" value="time_1" >
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-group">
+                                            <label>13:00 - 16:00 (3 Hrs) :</label>
+                                            {% if row.8 == 1 %}
+                                                <input type="checkbox" class="form-control" name="time" value="time_2" checked>
+                                            {% else %}
+                                                <input type="checkbox" class="form-control" name="time" value="time_2" >
+                                            {% endif %}
+                                        </div>
+                                        <div class="form-group">
+                                            <button class="btn btn-primary" type="submit">อัพเดท</button>
+                                            <button type="button" class="pull-right btn btn-default" data-dismiss="modal">Close</button>
+                                        </div>
+                                    </form>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    {% endfor %}
+                </tbody>
+            </table>
+            <a href="/add" class="btn btn-primary">จองใช้เครื่องมือ</a>
+            <span class="pull-right">Updated : <span id="datetime"></span></span>
+            <script>
+                var dt = new Date();
+                document.getElementById("datetime").innerHTML = dt.toLocaleString();
+            </script>
+            <script>
+                $(function () {
+                    $('#datetimepicker1').datetimepicker({
+                        daysOfWeekDisabled: [0, 6],
+                        format: 'L',
+                        format: 'DD-MM-YYYY'
+                    });
+                });
+            </script>
+        </div>
+    </body>
+</html>

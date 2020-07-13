@@ -1,7 +1,10 @@
 {% extends "base.html" %}
 
 {% block content %}
-<h1 align='center'>จองใช้เครื่องมือ</h1>
+<h1 align='center'>Welcome : {{ user }} / Credit : {{ credit }}</h1>
+<h1 align='center'>จองใช้เครื่องมือ : XRD</h1>
+<h4 align='center'>ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี</h4>
+<h4 align='center'>วิทยาลัยนาโนเทคโนโลยีพระจอมเกล้าลาดกระบัง</h4>
 <br>
 <div class="container">
     <div class="panel panel-success">
@@ -10,28 +13,62 @@
             <h3 align="center">ยืนยันการใช้เครื่องมือ</h3>
             <br>
             <form action="{{ url_for('insert') }}" method="post">
-                <input type="hidden" class="form-control"  name="name" value={{name}}>
-                <label>ชื่อ-นามสกุล : </label> {{ name }}<br>
-                <input type="hidden" class="form-control"  name="department" value={{department}}>
-                <label>หน่วยงาน : </label> {{ department }}<br>
-                <input type="hidden" class="form-control"  name="phone" value={{phone}}>
-                <label>โทรศัพท์ : </label> {{phone}}<br>
-                <input type="hidden" class="form-control"  name="email" value={{email}}>
-                <label>E-mail : </label> {{email}}<br>
-                <input type='hidden' class="form-control"  name="instru_date" value={{instru_date}}>
-                <label>วันที่ใช้เครื่องมือ : </label> {{instru_date}}<br>
-                {% if time_1 == '1' %}
-                    <input type="hidden" class="form-control"  name="time_1" value="1">
-                    <label>09:00 - 12:00 (3 Hrs) </label><br>
+                {% if id != -1 %}
+                    <input type="hidden" class="form-control"  name="id" value="{{ id }}">
+                    <label>เลขที่การจอง : </label> {{ id }} <br>
                 {% else %}
-                    <input type="hidden" class="form-control"  name="time_1" value="0">
+                    <input type="hidden" class="form-control"  name="id" value="{{ id }}">
                 {% endif %}
-                {% if time_2 == '1' %}
-                    <input type="hidden" class="form-control"  name="time_2" value="1">
-                    <label>13:00 - 16:00 (3 Hrs) </label><br>
+                <input type="hidden" class="form-control"  name="instrument" value="{{ instrument }}">
+                <label>เครื่องมือ : </label> {{ text }} <br>
+                <input type="hidden" class="form-control"  name="user" value="{{ user }}">
+                <label>ผู้ทำการจอง : </label> {{ fullname }} <br>
+                <input type="hidden" class="form-control"  name="name" value="{{ name }}">
+                <label>ผู้ใช้งานเครื่องมือ : </label> {{ name }} <br>
+                <input type="hidden" class="form-control"  name="phone" value="{{ phone }}">
+                <label>โทรศัพท์ : </label> {{phone}} <br>
+                <input type="hidden" class="form-control"  name="material" value="{{ material }}">
+                <label>สารที่ทดสอบ : </label> {{material}} <br>
+                <input type='hidden' class="form-control"  name="instru_date" value="{{instru_date}}">
+                <label>วันที่ใช้เครื่องมือ : </label> {{instru_date}} <br>
+                {% if time.0 == 1 %}
+                    <input type="hidden" class="form-control"  name="time_09" value="1">
+                    <label>09:00 - 10:00 (1 Hr) </label><br>
                 {% else %}
-                    <input type="hidden" class="form-control"  name="time_2" value="0">
+                    <input type="hidden" class="form-control"  name="time_09" value="0">
                 {% endif %}
+                {% if time.1 == 1 %}
+                    <input type="hidden" class="form-control"  name="time_10" value="1">
+                    <label>10:00 - 11:00 (1 Hr) </label><br>
+                {% else %}
+                    <input type="hidden" class="form-control"  name="time_10" value="0">
+                {% endif %}
+                {% if time.2 == 1 %}
+                    <input type="hidden" class="form-control"  name="time_11" value="1">
+                    <label>11:00 - 12:00 (1 Hr) </label><br>
+                {% else %}
+                    <input type="hidden" class="form-control"  name="time_11" value="0">
+                {% endif %}
+                {% if time.3 == 1 %}
+                    <input type="hidden" class="form-control"  name="time_13" value="1">
+                    <label>13:00 - 14:00 (1 Hr) </label><br>
+                {% else %}
+                    <input type="hidden" class="form-control"  name="time_13" value="0">
+                {% endif %}
+                {% if time.4 == 1 %}
+                    <input type="hidden" class="form-control"  name="time_14" value="1">
+                    <label>14:00 - 15:00 (1 Hr) </label><br>
+                {% else %}
+                    <input type="hidden" class="form-control"  name="time_14" value="0">
+                {% endif %}
+                {% if time.5 == 1 %}
+                    <input type="hidden" class="form-control"  name="time_15" value="1">
+                    <label>15:00 - 16:00 (1 Hr) </label><br>
+                {% else %}
+                    <input type="hidden" class="form-control"  name="time_15" value="0">
+                {% endif %}
+                    <input type="hidden" class="form-control"  name="comment" value="{{ comment }}">
+                    <label>บันทึกถึงนักวิทยาศาสตร์ : </label> {{comment}} <br>
                 <br>
                 <div class="form-group">
                     <button type="submit" class="btn btn-success" value="Submit">ยืนยัน</button>
@@ -43,13 +80,12 @@
         </div>
     </div>
 </div>
-</div>
 <script>
     $(function () {
         $('#datetimepicker1').datetimepicker({
             daysOfWeekDisabled: [0, 6],
             format: 'L',
-            format: 'DD-MM-YYYY'
+            format: 'YYYY-DD-MM'
         });
     });
 </script>

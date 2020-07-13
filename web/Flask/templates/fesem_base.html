@@ -1,0 +1,73 @@
+<!DOCTYPE html>
+
+<html lang="en" dir="ltr">
+    <head>
+        <meta charset="utf-8">
+        <title>FESEM</title>
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link href="css/bootstrap.min.css" rel="stylesheet" media="screen">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/css/bootstrap.min.css">
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.3.1/jquery.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.7/js/bootstrap.min.js"></script>
+
+        <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.12.4/jquery.min.js"></script>
+        <script src="https://cdn.jsdelivr.net/momentjs/2.14.1/moment.min.js"></script>
+        <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js"></script>
+        <script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/js/bootstrap-datetimepicker.min.js"></script>
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-datetimepicker/4.17.37/css/bootstrap-datetimepicker.min.css">
+        <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css">
+
+        <style>
+            table, th, td {
+              border: 1px solid lightgrey;
+            }
+            table.center {
+              margin-left: auto; 
+              margin-right: auto;
+            }
+            th, td {
+                padding: 10px;
+            }
+            .column {
+                float: left;
+                width: 33.33%;
+            }
+            .row:after {
+                content: "";
+                display: table;
+                clear: both;
+            }
+            .container {
+                width: 98%;
+            }
+        </style>
+    </head>
+    <body>
+        <br>
+        <h3 align='center'><span style="color:red">Close Beta Test - สำหรับนักวิทยาศาตร์ทดลองระบบเท่านั้น</span></h3>
+        <h3 align='center'><span style="color:red">กำหนดการทดสอบถึงวันที่ 13 กรกฎาคม 2563</span></h3>
+        <h3 align='center'><span style="color:red">หากมีข้อเสนอแนะเพิ่มเติม กรุณาส่งมาที่ kittiphong.am@kmitl.ac.th</span></h3>
+        <h3 align='center'><span style="color:red">การจองทั้งหมด จะไม่ถูกนำไปใช้งานจริง และจะทำการลบทั้งหมดในวันที่ 31 กรกฎาคม 2563</span></h3>
+        <br>
+        <div class="container">
+            <a href="/fesem/{{ year }}-{{ month }}" class="btn btn-primary">FESEM</a>
+            {% if user %}
+            <a href="{{ url_for('fesem_add') }}" class="btn btn-success">จองใช้เครื่องมือ</a>
+            <a href="{{ url_for('fesem_logout') }}" class="pull-right btn btn-warning">Logout</a>
+            <div class="pull-right">&nbsp;</div>
+            <a href="/fesem_user/{{ year }}-{{ month }}" class="pull-right btn btn-info">{{ user }}</a>
+            {% else %}
+            <a href="{{ url_for('fesem_login') }}" class="pull-right btn btn-warning">Login</a>
+            {% endif %}
+        </div>
+        <hr>
+        {% block content %}{% endblock %}
+        <br>
+        <footer class="page-footer font-small blue">
+            <div class="footer-copyright text-center py-3">© 2020 Copyright:
+                <a href="http://www.nano.kmitl.ac.th/"> College of Nanotechnogy, KMITL</a>
+            </div>  
+            <br>
+        </footer>
+    </body>
+</html>
