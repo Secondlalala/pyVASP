@@ -318,8 +318,13 @@ def add_form():
             cur.execute("SELECT `text` FROM `Instrument_rate` ")
             instru = cur.fetchall()
             cur.close()
+        with conn:
+            cur = conn.cursor()
+            cur.execute("SELECT `rating` FROM `Instrument_rate` ")
+            rate = cur.fetchall()
+            cur.close()
 
-            return render_template('add.html', user=user, year=now_year, month=now_month, instru=instru, credit=credit)
+        return render_template('add.html', user=user, year=now_year, month=now_month, instru=instru, rate=rate, credit=credit)
     else:
         user = None
         return render_template('denie.html')
@@ -396,6 +401,14 @@ def insert():
                       " book_date = CURRENT_TIMESTAMP " \
                       " WHERE id = %s "
                 cur.execute(sql, (name, phone, material, comment, id))
+            elif user == 'admin' :
+                sql = " INSERT INTO `booking` " \
+                      " (`username`,`name`,`phone`,`material`,`instru_date`," \
+                      " `book_09`,`book_10`,`book_11`,`book_13`,`book_14`,`book_15`," \
+                      " `book_date`,`status`,`instrument`,`cost`,`option`,`comment`) " \
+                      " values(%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,%s,CURRENT_TIMESTAMP,%s,%s,%s,%s,%s) "
+                cur.execute(sql, (
+                user, name, phone, material, instru_date, time_09, time_10, time_11, time_13, time_14, time_15, 'Approve', instrument, '0', option, comment))
             else:
                 sql = " INSERT INTO `booking` " \
                       " (`username`,`name`,`phone`,`material`,`instru_date`," \
@@ -611,15 +624,19 @@ def check():
                 text = "ไม่สามารถทำการจองเครื่องมือย้อนหลังได้"
                 return render_template('booking_error.html', message=text, user=user, year=now_year, month=now_month)
 
+            if instru_date.weekday() >= 5:
+                text = "ไม่สามารถทำการจองเครื่องมือในวันเสาร์-อาทิตย์ได้"
+                return render_template('booking_error.html', message=text, user=user, year=now_year, month=now_month)
+
             with conn:
                 cur = conn.cursor()
                 sql = "SELECT * FROM `Users` WHERE `username` = %s"
                 cur.execute(sql, (user))
-                fullname = cur.fetchone()
-                fullname = fullname[4]
-                credit = fullname[5]
+                full = cur.fetchone()
+                fullname = full[4]
+                credit = full[5]
                 cur.close()
-            if credit <= 0:
+            if int(credit) <= 0:
                 text = "Credit ไม่เพียงพอสำหรับทำการจองเครื่องมือ"
                 return render_template('booking_error.html', message=text, user=user, year=now_year, month=now_month)
 
@@ -1055,11 +1072,14 @@ def reset():
 
 @app.route('/reset_password', methods=['POST'])
 def reset_password():
-    now_year, now_month, now_date = now()
+    now = datetime.now()
+    now_month = int(now.strftime('%-m'))
+    now_year = int(now.strftime('%Y'))
+    now_date = int(now.strftime('%d'))
     if request.method == 'POST':
         user_create = request.form['username']
+        user = user_create
         email_create = request.form['email']
-        phone_create = request.form['phone']
 
         with conn:
             cur = conn.cursor()
@@ -1079,16 +1099,6 @@ def reset_password():
             cur.close()
         if temp[0] != email_create:
             text = "email ไม่ตรงกับ username ในระบบ"
-            return render_template('error.html', message=text, user=user, year=now_year, month=now_month)
-
-        with conn:
-            cur = conn.cursor()
-            sql = "SELECT phone FROM Users WHERE `username` = %s"
-            cur.execute(sql, (user_create))
-            temp = cur.fetchone()
-            cur.close()
-        if temp[0] != phone_create:
-            text = "หมายเลขโทรศัพท์ ไม่ตรงกับ username ในระบบ"
             return render_template('error.html', message=text, user=user, year=now_year, month=now_month)
 
         import secrets
@@ -1117,7 +1127,8 @@ def reset_password():
         วิทยาลัยนาโนเทคโนโลยีพระจอมเกล้าลาดกระบัง
         '''
         sendmail(receiver_address, subject, mail_content)
-        return render_template('password.html', username=user_create, email=email_create, phone=phone_create, year=now_year, month=now_month)
+        session.clear()
+        return render_template('password.html', username=user, email=email_create, year=now_year, month=now_month)
 
 
 @app.route('/password', methods=['POST'])
@@ -1153,7 +1164,7 @@ def password():
             conn.commit()
             cur.close()
         receiver_address = email_create
-        subject = "ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี - Create user"
+        subject = "ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี - Password Changed"
         mail_content = f'''เรียน {user_create},
 
         ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี ได้ทำการเปลี่ยนรหัสผ่านแล้ว
@@ -1164,6 +1175,70 @@ def password():
         '''
         sendmail(receiver_address, subject, mail_content)
         text = "ระบบได้ทำการเปลี่ยน password เรียบร้อยแล้ว"
+        session.clear()
+        return render_template('ok.html', message=text, user=user, year=now_year, month=now_month)
+
+
+@app.route('/change_password')
+def change_password():
+    now_year, now_month, now_date = now()
+    user = session['username']
+    return render_template('change_pass.html', username=user, year=now_year, month=now_month)
+
+
+@app.route('/changepassword', methods=['POST'])
+def changepassword():
+    now_year, now_month, now_date = now()
+    if request.method == 'POST':
+        user = request.form['username']
+        current_pass = request.form['current']
+        new_pass = request.form['newpass']
+        renew_pass = request.form['renewpass']
+
+        with conn:
+            cur = conn.cursor()
+            sql = "SELECT password FROM Users WHERE `username` = %s"
+            cur.execute(sql, (user))
+            temp = cur.fetchone()
+            cur.close()
+        if temp[0] != current_pass:
+            text = "Current Password ไม่ถูกต้อง"
+            return render_template('error.html', message=text, user=user, year=now_year, month=now_month)
+
+        if new_pass != renew_pass:
+            text = "password ไม่ตรงกัน"
+            return render_template('error.html', message=text, user=user, year=now_year, month=now_month)
+
+
+        with conn:
+            cur = conn.cursor()
+            sql = " UPDATE Users " \
+                  " SET password = %s " \
+                  " WHERE username = %s "
+            cur.execute(sql, (new_pass, user))
+            conn.commit()
+            cur.close()
+
+        with conn:
+            cur = conn.cursor()
+            sql = "SELECT `email` FROM `Users` WHERE `username` = %s"
+            cur.execute(sql, (user))
+            email = cur.fetchone()
+            cur.close()
+            print(email[0])
+        receiver_address = email[0]
+        subject = "ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี - Update password"
+        mail_content = f'''เรียน {user},
+
+        ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี ได้ทำการเปลี่ยนรหัสผ่านแล้ว
+
+        ----
+        ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี
+        วิทยาลัยนาโนเทคโนโลยีพระจอมเกล้าลาดกระบัง
+        '''
+        sendmail(receiver_address, subject, mail_content)
+        text = "ระบบได้ทำการเปลี่ยน password เรียบร้อยแล้ว"
+        session.clear()
         return render_template('ok.html', message=text, user=user, year=now_year, month=now_month)
 
 
@@ -1178,6 +1253,8 @@ def export():
                 users = cur.fetchall()
                 cur.close()
                 users_db = pd.DataFrame.from_dict(users)
+                users_db.columns = ['id','username','email','password','fullname','credit','phone']
+                users_db.drop(columns=['password'])
                 users_db.to_excel('users.xlsx')
             with conn:
                 cur = conn.cursor()
@@ -1185,13 +1262,15 @@ def export():
                 booking = cur.fetchall()
                 cur.close()
                 booking_db = pd.DataFrame.from_dict(booking)
+                booking_db.columns = ['id','username','name','phone','material','book_date','instru_date','09','10','11','13','14','15','status','instrument','cost','option','comment']
                 booking_db.to_excel('booking.xlsx')
             with conn:
                 cur = conn.cursor()
                 cur.execute("SELECT * FROM `Instrument_rate` ")
-                booking = cur.fetchall()
+                rating = cur.fetchall()
                 cur.close()
-                rating_db = pd.DataFrame.from_dict(booking)
+                rating_db = pd.DataFrame.from_dict(rating)
+                rating_db.columns = ['id','instrument','rating','option','text']
                 rating_db.to_excel('rating.xlsx')
             with ZipFile('nanokmitl_instrument.zip', 'w') as zipObj:
                 zipObj.write('users.xlsx')
@@ -1407,6 +1486,7 @@ def fesem_reset_password():
     now_year, now_month, now_date = now()
     if request.method == 'POST':
         user_create = request.form['username']
+        user = user_create
         email_create = request.form['email']
         phone_create = request.form['phone']
 
@@ -1466,6 +1546,7 @@ def fesem_reset_password():
         วิทยาลัยนาโนเทคโนโลยีพระจอมเกล้าลาดกระบัง
         '''
         sendmail(receiver_address, subject, mail_content)
+        session.clear()
         return render_template('fesem_password.html', user=user_create, email=email_create, phone=phone_create, year=now_year, month=now_month)
 
 
@@ -1502,7 +1583,7 @@ def fesem_password():
             conn.commit()
             cur.close()
         receiver_address = email_create
-        subject = "ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี - Create user"
+        subject = "ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี - Password Changed"
         mail_content = f'''เรียน {user_create},
 
         ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี ได้ทำการเปลี่ยนรหัสผ่านแล้ว
@@ -1513,6 +1594,7 @@ def fesem_password():
         '''
         sendmail(receiver_address, subject, mail_content)
         text = "ระบบได้ทำการเปลี่ยน password เรียบร้อยแล้ว"
+        session.clear()
         return render_template('fesem_ok.html', message=text, user=user, year=now_year, month=now_month)
 
 
@@ -1629,6 +1711,10 @@ def fesem_check():
                 text = "ไม่สามารถทำการจองเครื่องมือย้อนหลังได้"
                 return render_template('fesem_error.html', message=text, user=user, year=now_year, month=now_month)
 
+            if instru_date.weekday() >= 5:
+                text = "ไม่สามารถทำการจองเครื่องมือในวันเสาร์-อาทิตย์ได้"
+                return render_template('booking_error.html', message=text, user=user, year=now_year, month=now_month)
+
             with conn:
                 cur = conn.cursor()
                 sql = "SELECT `fullname` FROM `fesem_users` WHERE `username` = %s"
@@ -1691,7 +1777,10 @@ def fesem_check():
 
 @app.route('/fesem_insert', methods=['POST'])
 def fesem_insert():
-    now_year, now_month, now_date = now()
+    now = datetime.now()
+    now_month = int(now.strftime('%-m'))
+    now_year = int(now.strftime('%Y'))
+    now_date = int(now.strftime('%d'))
     user = session['username']
     if request.method == 'POST':
         id = request.form['id']

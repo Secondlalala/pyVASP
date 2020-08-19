@@ -125,7 +125,7 @@ for folder, subs, files in os.walk(localDir):
             ######################### Read kpoints #########################
             kpoints = defaultdict(list)
             algo = general['SYSTEM'][0]
-            if algo == 'BAND':
+            if algo == 'BAND' :
                 try:
                     key = vasprun['modeling']['kpoints']['generation']['i']['@name']
                     value = vasprun['modeling']['kpoints']['generation']['i']['#text']
@@ -145,7 +145,7 @@ for folder, subs, files in os.walk(localDir):
                     value = j['#text']
                     kpoints[key].append(value)
             else:
-                for j in vasprun['modeling']['kpoints']['generation']['i']:
+                for j in vasprun['modeling']['kpoints']['generation']['v']:
                     key = j['@name']
                     value = j['#text']
                     kpoints[key].append(value)

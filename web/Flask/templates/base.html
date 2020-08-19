@@ -44,10 +44,10 @@
     </head>
     <body>
         <br>
-        <h3 align='center'><span style="color:red">Close Beta Test - สำหรับนักวิทยาศาตร์ทดลองระบบเท่านั้น</span></h3>
-        <h3 align='center'><span style="color:red">กำหนดการทดสอบถึงวันที่ 13 กรกฎาคม 2563</span></h3>
-        <h3 align='center'><span style="color:red">หากมีข้อเสนอแนะเพิ่มเติม กรุณาส่งมาที่ kittiphong.am@kmitl.ac.th</span></h3>
+        <h3 align='center'><span style="color:red">Open Beta Test - สำหรับบุคลากรทดลองระบบเท่านั้น</span></h3>
+        <h3 align='center'><span style="color:red">กำหนดการทดสอบถึงวันที่ 30 กรกฎาคม 2563</span></h3>
         <h3 align='center'><span style="color:red">การจองทั้งหมด จะไม่ถูกนำไปใช้งานจริง และจะทำการลบทั้งหมดในวันที่ 31 กรกฎาคม 2563</span></h3>
+        <h3 align='center'><span style="color:red">หากมีข้อเสนอแนะเพิ่มเติม กรุณาส่งมาที่ <a href="https://airtable.com/shrsSxwi05h3gT8ND" target=”_blank”>https://airtable.com/shrsSxwi05h3gT8ND</a></span></h3>
         <br>
         <div class="container">
             <label>ศูนย์บริการเครื่องมือวิเคราะห์วัสดุและนาโนเทคโนโลยี, วิทยาลัยนาโนฯ</label>
@@ -55,6 +55,8 @@
             {% if user %}
             <a href="{{ url_for('add_form') }}" class="btn btn-success">จองใช้เครื่องมือ</a>
             <a href="{{ url_for('logout') }}" class="pull-right btn btn-warning">Logout</a>
+            <div class="pull-right">&nbsp;</div>
+            <a href="{{ url_for('change_password') }}" class="pull-right btn btn-info">Change Password</a>
             <div class="pull-right">&nbsp;</div>
             <a href="/user/{{ year }}-{{ month }}" class="pull-right btn btn-info">{{ user }}</a>
             {% else %}

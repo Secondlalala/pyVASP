@@ -69,9 +69,15 @@
             <tr style="background-color:ivory">
             {% endif %}
                 <td style="text-align:center">{{ row.0 }}</td>
-                <td style="text-align:center">{{ row.28 }}</td>
+                <td style="text-align:center">{{ row.29 }}</td>
                 <td style="text-align:center">{{ row.22 }}</td>
-                <td style="text-align:center">{{ row.2 }}</td>
+                <td style="text-align:center">
+                {% if row.14 == "Top up" %}
+                    &nbsp
+                {% else %}
+                    {{ row.2 }}
+                {% endif %}
+                </td>
                 <td style="text-align:center">
                     {% if row.3 %}
                         {{ row.3 }}

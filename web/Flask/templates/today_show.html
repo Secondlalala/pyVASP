@@ -19,7 +19,7 @@
     <table class="table table-bordered" align="center">
         <thead>
             <tr>
-                <th colspan="13" style="text-align:center" >
+                <th colspan="17" style="text-align:center" >
                     <div class="row">
                         <div class="column" class="pull-left">
                             {% set datex = date-1 %}
@@ -136,6 +136,10 @@
                 <th style="text-align:center">เลขที่การจอง</th>
                 <th style="text-align:center">เครื่องมือ</th>
                 <th style="text-align:center">ผู้ทำการจอง</th>
+                <th style="text-align:center">ผู้ใช้งานเครื่องมือ</th>
+                <th style="text-align:center">หมายเลขโทรศัพท์</th>
+                <th style="text-align:center">สารที่ทดสอบ</th>
+                <th style="text-align:center">บันทึก</th>
                 <th style="text-align:center">วันที่ทำการจอง</th>
                 <th style="text-align:center">วันที่ใช้เครื่องมือ</th>
                 <th style="text-align:center">09-10</th>
@@ -145,6 +149,7 @@
                 <th style="text-align:center">14-15</th>
                 <th style="text-align:center">15-16</th>
                 <th style="text-align:center">สถานะ</th>
+                <th style="text-align:center">ค่าใช้จ่าย</th>
                 <th style="text-align:center">Action</th>
             </tr>
         </thead>
@@ -159,6 +164,34 @@
                 <td style="text-align:center">{{ row.0 }}</td>
                 <td style="text-align:center">{{ row.29 }}</td>
                 <td style="text-align:center">{{ row.22 }}</td>
+                <td style="text-align:center">
+                    {% if row.14 == "Top up" %}
+                        &nbsp
+                    {% else %}
+                        {{ row.2 }}
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.3 %}
+                        {{ row.3 }}
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.4 %}
+                        {{ row.4 }}
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {% if row.17 %}
+                        {{ row.17 }}
+                    {% else %}
+                        &nbsp
+                    {% endif %}
+                </td>
                 <td style="text-align:center">{{ row.5 }}</td>
                 <td style="text-align:center">{{ row.6 }}</td>
                 <td style="text-align:center">
@@ -211,6 +244,9 @@
                     {% else %}
                         <span style="color:red">{{ row.13 }}</span>
                     {% endif %}
+                </td>
+                <td style="text-align:center">
+                    {{ row.15 }}
                 </td>
                 <td style="text-align:center">
                     {% if row.14 == "Top up" %}
